@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "node server",
+    "dev": "concurrently \"nodemon server\" \"cd ui && yarn start\"",
     "build": "cd ui/ && yarn install && yarn build",
     "commit": "npx git-cz"
   },
@@ -19,6 +20,7 @@
   ],
   "dependencies": {
     "commitizen": "^4.1.2",
+    "concurrently": "^5.2.0",
     "express": "^4.17.1"
   },
   "devDependencies": {

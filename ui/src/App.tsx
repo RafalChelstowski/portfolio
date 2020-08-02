@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
+import Pool from './features/pool/PoolView';
 
 function App(): JSX.Element {
-  return <div className="App">test</div>;
+  return <Pool />;
 }
 
 export default App;
