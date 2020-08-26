@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-unresolved
 import { useBox } from 'use-cannon';
 import { useFrame } from 'react-three-fiber';
@@ -17,6 +17,7 @@ function ItemPrimitive({
   isSortingActive,
 }: Props): JSX.Element {
   const [hovered, setHover] = React.useState(false);
+  const velocityRef = useRef<null | number[]>(null);
   const [ref, api] = useBox(() => ({
     mass: 1,
     position: [
@@ -29,9 +30,27 @@ function ItemPrimitive({
     allowSleep: false,
   }));
 
+  useEffect(() => {
+    let isMounted = true;
+
+    if (isMounted) {
+      api.velocity.subscribe((v) => {
+        velocityRef.current = v;
+      });
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   useFrame(() => {
-    if (isSortingActive) {
-      api.velocity.set(item.sortingVelocity[0], 0, item.sortingVelocity[2]);
+    if (isSortingActive && velocityRef.current) {
+      api.velocity.set(
+        item.sortingVelocity[0],
+        velocityRef.current[1],
+        item.sortingVelocity[2]
+      );
     }
   });
 
