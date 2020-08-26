@@ -12,13 +12,13 @@ import FallingItems from '../items/FallingItems';
 const items = [
   {
     id: 1,
-    title: 'dupa',
+    title: '1',
     sortingVelocity: [4, 0, 0],
     customColor: '#87bdcf',
   },
   {
     id: 2,
-    title: 'siki',
+    title: '2',
     sortingVelocity: [-4, 0, 0],
     customColor: '#17829b',
   },
