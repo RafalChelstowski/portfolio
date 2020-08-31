@@ -2,19 +2,20 @@ import React, { useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-unresolved
 import { useBox } from 'use-cannon';
 import { useFrame } from 'react-three-fiber';
-import { Html } from 'drei';
-import { Item } from '../pool/PoolView';
+import { Item3d } from '../../types';
 
 interface Props {
-  item: Item;
+  item: Item3d;
   posmodifier: number;
   isSortingActive: boolean;
+  toggleContent: (item: Item3d) => void;
 }
 
 function ItemPrimitive({
   item,
   posmodifier,
   isSortingActive,
+  toggleContent,
 }: Props): JSX.Element {
   const [hovered, setHover] = React.useState(false);
   const velocityRef = useRef<null | number[]>(null);
@@ -31,35 +32,31 @@ function ItemPrimitive({
   }));
 
   useEffect(() => {
-    let isMounted = true;
-
-    if (isMounted) {
-      api.velocity.subscribe((v) => {
-        velocityRef.current = v;
-      });
-    }
-
-    return () => {
-      isMounted = false;
-    };
+    api.velocity.subscribe((v) => {
+      velocityRef.current = v;
+    });
   }, []);
 
   useFrame(() => {
     if (isSortingActive && velocityRef.current) {
-      api.velocity.set(
-        item.sortingVelocity[0],
-        velocityRef.current[1],
-        item.sortingVelocity[2]
-      );
+      const [vx, , vz] = item.sortingVelocity;
+      const [, nvy] = velocityRef.current;
+      api.velocity.set(vx, nvy, vz);
     }
   });
 
   return (
     <mesh
       ref={ref}
+      receiveShadow
       castShadow
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
+      onPointerOver={() => {
+        setHover(true);
+      }}
+      onPointerOut={() => {
+        setHover(false);
+      }}
+      onClick={() => toggleContent(item)}
       dispose={null}
     >
       <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
@@ -67,13 +64,6 @@ function ItemPrimitive({
         attach="material"
         color={hovered ? '#b252a1' : item.customColor}
       />
-      {hovered ? (
-        <Html scaleFactor={35}>
-          <div className="item__content">
-            <p>{item.title}</p>
-          </div>
-        </Html>
-      ) : null}
     </mesh>
   );
 }

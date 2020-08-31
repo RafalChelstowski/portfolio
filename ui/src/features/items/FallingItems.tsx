@@ -1,52 +1,41 @@
 import React from 'react';
-import ItemPrimitive from './ItemPrimitive';
-import { Item } from '../pool/PoolView';
-// import { blueColorArr, sortingVelocityArr } from '../helpers';
-
-// interface TweetToRender extends Tweet {
-//   customColor: string;
-//   sortingVelocity: number[];
-// }
+import ItemPrimitive from '../item/ItemPrimitive';
+import { useStore } from '../../store/store';
+import { Item3d } from '../../types';
 
 interface Props {
-  items: Item[];
   isSortingActive: boolean;
+  toggleContent: (item: Item3d) => void;
 }
 
-function FallingItems({ items, isSortingActive }: Props): JSX.Element {
-  // const [flattenedTweets, setFlattenedTweets] = React.useState<TweetToRender[]>(
-  //   []
-  // );
+function FallingItems({ isSortingActive, toggleContent }: Props): JSX.Element {
+  const experience = useStore((state) => state.experience);
+  const education = useStore((state) => state.education);
+  const projects = useStore((state) => state.projects);
 
-  // React.useEffect(() => {
-  //   if (tweets.length > 0) {
-  //     setFlattenedTweets(
-  //       tweets
-  //         .map((el: Item, index: number) => {
-  //           const tweetsSets: Item[] = Object.values(el)[0];
-  //           return tweetsSets.map((tweetSet) => {
-  //             return {
-  //               ...tweetSet,
-  //               customColor: blueColorArr[index],
-  //               sortingVelocity: sortingVelocityArr[index],
-  //             };
-  //           });
-  //         })
-  //         .flat(2)
-  //     );
-  //   }
-  // }, [tweets]);
+  const items: Item3d[] = [...experience, ...education, ...projects].map(
+    (el, idx) => {
+      return {
+        ...el,
+        id: `${el.type}-${idx}`,
+      };
+    }
+  );
 
   return (
     <>
-      {items.map((item, idx) => (
-        <ItemPrimitive
-          isSortingActive={isSortingActive}
-          key={item.id}
-          item={item}
-          posmodifier={idx}
-        />
-      ))}
+      {items.map((item, idx) => {
+        const { id } = item;
+        return (
+          <ItemPrimitive
+            isSortingActive={isSortingActive}
+            toggleContent={toggleContent}
+            key={id}
+            item={item}
+            posmodifier={idx}
+          />
+        );
+      })}
     </>
   );
 }

@@ -1,3 +1,4 @@
 @import '../node_modules/reset-css/reset.css';
+@import './app.scss';
 @import './features/ui/user-interface.scss';
-@import './features/items/item-primitive.scss';
+@import './features/item/item-primitive.scss';

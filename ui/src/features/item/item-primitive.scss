@@ -1,0 +1,53 @@
+.item__html {
+    position: absolute;
+    z-index: 9999;
+    top: 20%;
+    left: 50%;
+}
+
+.item__type {
+    font-variant: small-caps;
+    font-size: 15px;
+}
+
+.item__listitem {
+    list-style: circle;
+}
+
+.item__close {
+    font-family: 'Fenice';
+    background: none;
+    margin: 10px 0px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.item__experience {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 60%;
+    margin-left: -30%;
+    padding: 40px;
+    color: $darkblue;
+    border: 3px solid $darkblue;
+    border-radius: 10px;
+}
+
+.item__education {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 60%;
+    margin-left: -30%;
+    padding: 40px;
+    color: $mediumpink;
+    border: 3px solid $mediumpink;
+    border-radius: 10px;
+}
+
+.item__project {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 60%;
+    margin-left: -30%;
+    padding: 40px;
+    color: $darkpink;
+    border: 3px solid  $darkpink;
+    border-radius: 10px;
+}

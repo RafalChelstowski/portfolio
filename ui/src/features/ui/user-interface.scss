@@ -5,3 +5,20 @@
     z-index: 9999;
     transition: all 500ms;
 }
+
+.user-interface__intro {
+    font-family: 'VCR_OSD';
+    font-size: 15px;
+    color: white;
+    padding: 10px;
+    margin: 20px;
+}
+
+.user-interface__sort {
+    font-family: 'VCR_OSD';
+    font-size: 30px;
+    color: white;
+    padding: 10px;
+    margin: 20px;
+    cursor: progress;
+}

@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'VCR_OSD';
+    src: url(./assets/fonts/VCR_OSD.ttf) format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Fenice';
+    src: url(./assets/fonts/FeniceStd-Oblique.otf) format('opentype');
+  }
+
+  $darkblue: #426271;
+  $mediumblue: #17829b;
+  $darkpink: #bb787b;
+  $mediumpink: #d89ea6;
+
+
+  h2 {
+    font-family: 'Fenice';
+    letter-spacing: 5px;
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-family: 'Fenice';
+    font-size: 18px; 
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }

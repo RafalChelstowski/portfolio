@@ -6,9 +6,9 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
-    'plugin:prettier/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -30,8 +30,8 @@ module.exports = {
     'prettier/prettier': 'error',
     'import/extensions': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    // '@typescript-eslint/no-unused-vars': 'off',
     'react/jsx-filename-extension': [0],
     '@typescript-eslint/camelcase': 'off',
+    'import/prefer-default-export': 'off',
   },
 };
