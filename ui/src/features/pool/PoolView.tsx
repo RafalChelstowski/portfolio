@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useCallback } from 'react';
 import { Canvas } from 'react-three-fiber';
 import { OrbitControls } from 'drei';
 // eslint-disable-next-line import/no-unresolved
@@ -9,35 +9,20 @@ import UserInterface from '../ui/UserInterface';
 import Enviroment from './Enviroment';
 import FallingItems from '../items/FallingItems';
 import { Item3d } from '../../types';
+import { useStore } from '../../store/store';
 
 export function PoolView(): JSX.Element {
+  const content: Item3d | null = useStore((state) => state.content);
+  const isContentActive = content !== null;
   const [isSortingActive, setIsSortingActive] = useState(false);
-  const [content, setContent] = useState<Item3d | null>(null);
 
-  function toggleIsSortingActive(): void {
+  const toggleIsSortingActive = useCallback(() => {
     setIsSortingActive(!isSortingActive);
-  }
-
-  function closeContent() {
-    setContent(null);
-  }
-
-  function toggleContent(item: Item3d) {
-    if (item.id === content?.id) {
-      setContent(null);
-    } else {
-      setContent(item);
-    }
-  }
+  }, [isSortingActive]);
 
   return (
     <>
-      <UserInterface
-        isSortingActive={isSortingActive}
-        toggleIsSortingActive={toggleIsSortingActive}
-        closeContent={closeContent}
-        content={content}
-      />
+      <UserInterface {...{ isSortingActive, toggleIsSortingActive }} />
       <Canvas
         sRGB
         concurrent
@@ -46,9 +31,9 @@ export function PoolView(): JSX.Element {
       >
         <Camera />
         <OrbitControls
-          autoRotate
-          autoRotateSpeed={0.5}
-          enablePan={false}
+          autoRotate={!isContentActive}
+          autoRotateSpeed={isContentActive ? 0 : 0.5}
+          enablePan={isContentActive}
           enableZoom={false}
           enableRotate={false}
           maxPolarAngle={Math.PI / 3}
@@ -58,10 +43,7 @@ export function PoolView(): JSX.Element {
         <Suspense fallback={null}>
           <Physics>
             <Enviroment />
-            <FallingItems
-              isSortingActive={isSortingActive}
-              toggleContent={toggleContent}
-            />
+            <FallingItems {...{ isSortingActive }} />
           </Physics>
         </Suspense>
       </Canvas>

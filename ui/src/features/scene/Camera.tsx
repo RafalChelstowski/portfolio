@@ -1,12 +1,27 @@
 import React, { useEffect, useRef } from 'react';
 import { useThree } from 'react-three-fiber';
+import { useStore } from '../../store/store';
 
 function Camera(): JSX.Element {
-  const ref = useRef();
+  const content = useStore((state) => state.content);
+  const ref = useRef<null | THREE.PerspectiveCamera>(null);
   const { setDefaultCamera } = useThree();
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useEffect(() => setDefaultCamera(ref.current!), [setDefaultCamera]);
+  useEffect(() => {
+    if (ref.current) {
+      setDefaultCamera(ref.current);
+    }
+  }, [setDefaultCamera]);
+
+  useEffect(() => {
+    if (ref.current && content !== null) {
+      ref.current.position.x = 5.7;
+      ref.current.position.y = 10;
+      ref.current.position.z = -7;
+    } else if (ref.current && content === null) {
+      ref.current.position.y = 25;
+    }
+  }, [content]);
 
   return (
     <perspectiveCamera

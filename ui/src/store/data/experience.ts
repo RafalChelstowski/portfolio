@@ -32,7 +32,7 @@ const data = [
     where: 'Wroclaw',
   },
   {
-    company: 'Marketing/web/print freelancer',
+    company: 'Marketing / web / print freelancer',
     fromTo: 'Sep 2007 - May 2016',
     jobtitle: 'Freelancer',
     where: 'Wroclaw',

@@ -3,20 +3,20 @@ import React, { useEffect, useRef } from 'react';
 import { useBox } from 'use-cannon';
 import { useFrame } from 'react-three-fiber';
 import { Item3d } from '../../types';
+import { useStore } from '../../store/store';
 
 interface Props {
   item: Item3d;
   posmodifier: number;
   isSortingActive: boolean;
-  toggleContent: (item: Item3d) => void;
 }
 
 function ItemPrimitive({
   item,
   posmodifier,
   isSortingActive,
-  toggleContent,
 }: Props): JSX.Element {
+  const setContent = useStore((state) => state.setContent);
   const [hovered, setHover] = React.useState(false);
   const velocityRef = useRef<null | number[]>(null);
   const [ref, api] = useBox(() => ({
@@ -35,7 +35,7 @@ function ItemPrimitive({
     api.velocity.subscribe((v) => {
       velocityRef.current = v;
     });
-  }, []);
+  }, [api.velocity]);
 
   useFrame(() => {
     if (isSortingActive && velocityRef.current) {
@@ -56,7 +56,7 @@ function ItemPrimitive({
       onPointerOut={() => {
         setHover(false);
       }}
-      onClick={() => toggleContent(item)}
+      onClick={() => setContent(item)}
       dispose={null}
     >
       <boxBufferGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
