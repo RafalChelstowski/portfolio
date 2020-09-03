@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ItemPrimitive from '../item/ItemPrimitive';
 import { useStore } from '../../store/store';
 import { Item3d } from '../../types';
 
 interface Props {
   isSortingActive: boolean;
-  toggleContent: (item: Item3d) => void;
 }
 
-function FallingItems({ isSortingActive, toggleContent }: Props): JSX.Element {
+function FallingItems({ isSortingActive }: Props): JSX.Element {
   const experience = useStore((state) => state.experience);
   const education = useStore((state) => state.education);
   const projects = useStore((state) => state.projects);
@@ -22,14 +21,15 @@ function FallingItems({ isSortingActive, toggleContent }: Props): JSX.Element {
     }
   );
 
+  const memoizedItems = useMemo(() => items, [items]);
+
   return (
     <>
-      {items.map((item, idx) => {
+      {memoizedItems.map((item, idx) => {
         const { id } = item;
         return (
           <ItemPrimitive
             isSortingActive={isSortingActive}
-            toggleContent={toggleContent}
             key={id}
             item={item}
             posmodifier={idx}

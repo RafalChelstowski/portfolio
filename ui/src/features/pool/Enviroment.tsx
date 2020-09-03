@@ -3,11 +3,16 @@ import { Color } from 'three';
 import { useLoader } from 'react-three-fiber';
 // eslint-disable-next-line import/no-unresolved
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
+import { Html } from 'drei';
 // eslint-disable-next-line import/no-unresolved
 import { usePlane, useBox } from 'use-cannon';
+import Info from '../info/Info';
+// import { Item3d } from '../../types';
 
 interface GltfImport extends GLTF {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   nodes: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   materials: any;
 }
 
@@ -109,7 +114,11 @@ function Enviroment(): JSX.Element {
           scale={[1.23, 1.23, 1.23]}
           receiveShadow
           castShadow
-        />
+        >
+          <Html>
+            <Info />
+          </Html>
+        </mesh>
       </group>
     </>
   );
